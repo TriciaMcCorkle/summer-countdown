@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Summer Countdown</title>
+
+<style>
+body {
+  margin:0;
+  font-family: Arial;
+  text-align:center;
+  background:#cfefff;
+}
+
+.container {
+  max-width:800px;
+  margin:auto;
+  padding:20px;
+}
+
+/* POOL */
+.pool {
+  position:relative;
+  height:250px;
+  border-radius:20px;
+  overflow:hidden;
+  background:linear-gradient(#87CEEB 40%, #4FC3F7 40%);
+}
+
+/* water waves */
+.pool::after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60%;
+  background:repeating-linear-gradient(
+    0deg,
+    #4FC3F7,
+    #4FC3F7 20px,
+    #29B6F6 20px,
+    #29B6F6 40px
+  );
+}
+
+/* swimmer */
+.swimmer {
+  position:absolute;
+  bottom:50px;
+  left:0%;
+  font-size:50px;
+  transition:left 1s ease;
+}
+
+/* start + finish */
+.start {
+  position:absolute;
+  left:10px;
+  top:10px;
+  font-size:30px;
+}
+
+.finish {
+  position:absolute;
+  right:10px;
+  top:10px;
+  font-size:30px;
+}
+
+/* progress */
+.bar-bg {
+  width:100%;
+  height:20px;
+  background:#ddd;
+  border-radius:10px;
+  margin-top:15px;
+}
+
+.bar {
+  height:100%;
+  width:0%;
+  background:#4CAF50;
+  border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>☀️ Summer School Countdown ☀️</h2>
+
+<div class="pool">
+  <div class="start">🌴</div>
+  <div class="finish">🏁</div>
+  <div id="swimmer" class="swimmer">🏊‍♂️</div>
+</div>
+
+<div class="bar-bg">
+  <div id="bar" class="bar"></div>
+</div>
+
+<h3 id="dayText"></h3>
+<p id="dateText"></p>
+
+</div>
+
+<script>
+
+const days = [
+"2026-05-27",
+"2026-05-28",
+"2026-05-29",
+"2026-06-01",
+"2026-06-02",
+"2026-06-03",
+"2026-06-04",
+"2026-06-08",
+"2026-06-09",
+"2026-06-10",
+"2026-06-11",
+"2026-06-12",
+"2026-06-15",
+"2026-06-16",
+"2026-06-17",
+"2026-06-18",
+"2026-06-22",
+"2026-06-23",
+"2026-06-24",
+"2026-06-25"
+];
+
+const today = new Date();
+const todayStr =
+today.getFullYear() + "-" +
+String(today.getMonth()+1).padStart(2,"0") + "-" +
+String(today.getDate()).padStart(2,"0");
+
+let day = 0;
+
+for (let i = 0; i < days.length; i++) {
+  if (todayStr >= days[i]) {
+    day = i + 1;
+  }
+}
+
+if (todayStr < days[0]) day = 0;
+
+const percent = (day / days.length) * 100;
+
+document.getElementById("swimmer").style.left = percent + "%";
+document.getElementById("bar").style.width = percent + "%";
+
+document.getElementById("dayText").innerText =
+"Day " + day + " of " + days.length;
+
+document.getElementById("dateText").innerText =
+today.toLocaleDateString();
+
+</script>
+
+</body>
+</html>

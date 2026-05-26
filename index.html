@@ -1,10 +1,165 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Summer School Countdown</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f8fbff;
+}
+
+.card{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+    text-align:center;
+}
+
+.pool{
+    position:relative;
+    height:220px;
+    border-radius:20px;
+    overflow:hidden;
+    background:linear-gradient(
+        to bottom,
+        #87CEEB 0%,
+        #87CEEB 40%,
+        #4FC3F7 40%,
+        #29B6F6 100%
+    );
+}
+
+.palm{
+    position:absolute;
+    left:20px;
+    top:15px;
+    font-size:50px;
+}
+
+.flag{
+    position:absolute;
+    right:20px;
+    top:15px;
+    font-size:50px;
+}
+
+.swimmer{
+    position:absolute;
+    bottom:25px;
+    left:0%;
+    font-size:70px;
+    transition:left 1s ease;
+}
+
+.progress{
+    width:100%;
+    height:25px;
+    background:#dbe8f5;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:15px;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:#4CAF50;
+}
+
+h1{
+    color:#0b5cab;
+}
+</style>
 </head>
-<body style="font-family:Arial;text-align:center;padding:40px;">
-<h1>Summer School Countdown</h1>
-<p>If you can see this, GitHub Pages is working!</p>
+
+<body>
+
+<div class="card">
+
+<h1>☀️ Summer School Countdown ☀️</h1>
+
+<div class="pool">
+    <div class="palm">🌴</div>
+    <div class="flag">🏁</div>
+    <div id="swimmer" class="swimmer">🏊</div>
+</div>
+
+<div class="progress">
+    <div id="bar" class="bar"></div>
+</div>
+
+<h2 id="dayText"></h2>
+<p id="dateText"></p>
+<p id="message"></p>
+
+</div>
+
+<script>
+
+const schoolDays = [
+"2025-05-27",
+"2025-05-28",
+"2025-05-29",
+"2025-05-30",
+"2025-06-02",
+"2025-06-03",
+"2025-06-04",
+"2025-06-05",
+"2025-06-09",
+"2025-06-10",
+"2025-06-11",
+"2025-06-12",
+"2025-06-13",
+"2025-06-16",
+"2025-06-17",
+"2025-06-18",
+"2025-06-23",
+"2025-06-24",
+"2025-06-25"
+];
+
+const today = new Date();
+
+const localDate =
+today.getFullYear() + "-" +
+String(today.getMonth()+1).padStart(2,"0") + "-" +
+String(today.getDate()).padStart(2,"0");
+
+let dayNumber = 0;
+
+for(let i=0;i<schoolDays.length;i++){
+    if(localDate >= schoolDays[i]){
+        dayNumber = i + 1;
+    }
+}
+
+const totalDays = schoolDays.length;
+
+const percent = (dayNumber / totalDays) * 100;
+
+document.getElementById("bar").style.width =
+percent + "%";
+
+document.getElementById("swimmer").style.left =
+Math.max(0, percent - 5) + "%";
+
+document.getElementById("dayText").innerText =
+"Day " + dayNumber + " of " + totalDays;
+
+document.getElementById("dateText").innerText =
+today.toLocaleDateString();
+
+const remaining = totalDays - dayNumber;
+
+document.getElementById("message").innerText =
+remaining > 0
+? remaining + " school days remaining!"
+: "🎉 Summer school complete!";
+
+</script>
+
 </body>
 </html>

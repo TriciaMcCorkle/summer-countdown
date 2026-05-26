@@ -2,104 +2,105 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Summer School Countdown</title>
+<title>Summer Countdown</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f8fbff;
+body {
+  margin:0;
+  font-family: Arial;
+  text-align:center;
+  background:#eaf6ff;
 }
 
-.card{
-    max-width:900px;
-    margin:auto;
-    padding:20px;
-    text-align:center;
+.container {
+  max-width:800px;
+  margin:auto;
+  padding:20px;
 }
 
-.pool{
-    position:relative;
-    height:220px;
-    border-radius:20px;
-    overflow:hidden;
-    background:linear-gradient(
-        to bottom,
-        #87CEEB 0%,
-        #87CEEB 40%,
-        #4FC3F7 40%,
-        #29B6F6 100%
-    );
+.pool {
+  position:relative;
+  width:100%;
+  height:220px;
+  background:#87CEEB;
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.palm{
-    position:absolute;
-    left:20px;
-    top:15px;
-    font-size:50px;
+/* water */
+.water {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60%;
+  background:#3bb9ff;
 }
 
-.flag{
-    position:absolute;
-    right:20px;
-    top:15px;
-    font-size:50px;
+/* swimmer */
+.swimmer {
+  position:absolute;
+  bottom:40px;
+  font-size:60px;
+  transition:left 1s ease;
 }
 
-.swimmer{
-    position:absolute;
-    bottom:25px;
-    left:0%;
-    font-size:70px;
-    transition:left 1s ease;
+/* start + finish */
+.start {
+  position:absolute;
+  left:10px;
+  top:10px;
+  font-size:30px;
 }
 
-.progress{
-    width:100%;
-    height:25px;
-    background:#dbe8f5;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:15px;
+.finish {
+  position:absolute;
+  right:10px;
+  top:10px;
+  font-size:30px;
 }
 
-.bar{
-    height:100%;
-    width:0%;
-    background:#4CAF50;
+.bar-bg {
+  width:100%;
+  height:20px;
+  background:#ddd;
+  border-radius:10px;
+  margin-top:15px;
 }
 
-h1{
-    color:#0b5cab;
+.bar {
+  height:100%;
+  width:0%;
+  background:#4CAF50;
+  border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
 
-<h1>☀️ Summer School Countdown ☀️</h1>
+<h2>☀️ Summer School Countdown ☀️</h2>
 
 <div class="pool">
-    <div class="palm">🌴</div>
-    <div class="flag">🏁</div>
-    <div id="swimmer" class="swimmer">🏊</div>
+  <div class="start">🌴</div>
+  <div class="finish">🏁</div>
+  <div class="water"></div>
+  <div id="swimmer" class="swimmer">🏊</div>
 </div>
 
-<div class="progress">
-    <div id="bar" class="bar"></div>
+<div class="bar-bg">
+  <div id="bar" class="bar"></div>
 </div>
 
-<h2 id="dayText"></h2>
+<h3 id="dayText"></h3>
 <p id="dateText"></p>
-<p id="message"></p>
 
 </div>
 
 <script>
 
-const schoolDays = [
+const days = [
 "2026-05-27",
 "2026-05-28",
 "2026-05-29",
@@ -123,42 +124,29 @@ const schoolDays = [
 ];
 
 const today = new Date();
-
-const localDate =
+const formatted =
 today.getFullYear() + "-" +
 String(today.getMonth()+1).padStart(2,"0") + "-" +
 String(today.getDate()).padStart(2,"0");
 
-let dayNumber = 0;
+let day = 0;
 
-for(let i=0;i<schoolDays.length;i++){
-    if(localDate >= schoolDays[i]){
-        dayNumber = i + 1;
-    }
+for (let i = 0; i < days.length; i++) {
+  if (formatted >= days[i]) {
+    day = i + 1;
+  }
 }
 
-const totalDays = schoolDays.length;
+const percent = (day / days.length) * 100;
 
-const percent = (dayNumber / totalDays) * 100;
-
-document.getElementById("bar").style.width =
-percent + "%";
-
-document.getElementById("swimmer").style.left =
-Math.max(0, percent - 5) + "%";
+document.getElementById("swimmer").style.left = percent + "%";
+document.getElementById("bar").style.width = percent + "%";
 
 document.getElementById("dayText").innerText =
-"Day " + dayNumber + " of " + totalDays;
+"Day " + day + " of " + days.length;
 
 document.getElementById("dateText").innerText =
 today.toLocaleDateString();
-
-const remaining = totalDays - dayNumber;
-
-document.getElementById("message").innerText =
-remaining > 0
-? remaining + " school days remaining!"
-: "🎉 Summer school complete!";
 
 </script>
 

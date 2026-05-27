@@ -2,83 +2,33 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Summer Countdown</title>
+<title>Summer School Countdown</title>
 
 <style>
-body {
-  margin:0;
-  font-family: Arial;
+body{
+  font-family:Arial,sans-serif;
   text-align:center;
-  background:#eaf6ff;
-}
-
-.container {
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
-
-/* POOL */
-.pool {
-  position:relative;
-  width:100%;
-  height:220px;
-  border-radius:20px;
-  overflow:hidden;
-  background:linear-gradient(to bottom, #87CEEB 0%, #87CEEB 40%, #4FC3F7 40%, #29B6F6 100%);
-}
-
-/* lane lines */
-.lane {
-  position:absolute;
-  width:100%;
-  height:6px;
+  margin:0;
   background:white;
-  opacity:0.6;
 }
 
-.l1 { top:120px; }
-.l2 { top:150px; }
-.l3 { top:180px; }
-
-/* swimmer (cartoon-ish) */
-.swimmer {
-  position:absolute;
-  bottom:35px;
-  left:0%;
-  font-size:60px;
-  transition:left 1s ease;
+.container{
+  max-width:1000px;
+  margin:auto;
 }
 
-/* start + finish */
-.start {
-  position:absolute;
-  left:10px;
-  top:10px;
-  font-size:28px;
-}
-
-.finish {
-  position:absolute;
-  right:10px;
-  top:10px;
-  font-size:28px;
-}
-
-/* progress bar */
-.bar-bg {
+img{
   width:100%;
-  height:20px;
-  background:#ddd;
-  border-radius:10px;
-  margin-top:15px;
+  height:auto;
 }
 
-.bar {
-  height:100%;
-  width:0%;
-  background:#4CAF50;
-  border-radius:10px;
+h2{
+  margin:10px 0 0 0;
+  color:#0b5cab;
+}
+
+p{
+  margin:5px 0 15px 0;
 }
 </style>
 </head>
@@ -87,31 +37,16 @@ body {
 
 <div class="container">
 
-<h2>☀️ Summer School Countdown ☀️</h2>
+<h2 id="dayLabel"></h2>
+<p id="dateLabel"></p>
 
-<div class="pool">
-  <div class="start">🌴</div>
-  <div class="finish">🏁</div>
-
-  <div class="lane l1"></div>
-  <div class="lane l2"></div>
-  <div class="lane l3"></div>
-
-  <div id="swimmer" class="swimmer">🏊‍♂️</div>
-</div>
-
-<div class="bar-bg">
-  <div id="bar" class="bar"></div>
-</div>
-
-<h3 id="dayText"></h3>
-<p id="dateText"></p>
+<img id="countdownImage" src="1.png">
 
 </div>
 
 <script>
 
-const days = [
+const schoolDays = [
 "2026-05-27",
 "2026-05-28",
 "2026-05-29",
@@ -135,38 +70,35 @@ const days = [
 ];
 
 const today = new Date();
-const todayStr =
+
+const localDate =
 today.getFullYear() + "-" +
 String(today.getMonth()+1).padStart(2,"0") + "-" +
 String(today.getDate()).padStart(2,"0");
 
-let day = 0;
+let dayNumber = 1;
 
-/* FIXED LOGIC */
-for (let i = 0; i < days.length; i++) {
-  if (todayStr === days[i]) {
-    day = i + 1;
-    break;
-  }
-  if (todayStr > days[i]) {
-    day = i + 1;
+for(let i=0;i<schoolDays.length;i++){
+  if(localDate >= schoolDays[i]){
+    dayNumber = i + 1;
   }
 }
 
-/* BEFORE START FIX */
-if (todayStr < days[0]) {
-  day = 0;
+if(localDate < schoolDays[0]){
+  dayNumber = 1;
 }
 
-const percent = (day / days.length) * 100;
+if(dayNumber > 20){
+  dayNumber = 20;
+}
 
-document.getElementById("swimmer").style.left = percent + "%";
-document.getElementById("bar").style.width = percent + "%";
+document.getElementById("countdownImage").src =
+dayNumber + ".png";
 
-document.getElementById("dayText").innerText =
-"Day " + day + " of " + days.length;
+document.getElementById("dayLabel").innerText =
+"Day " + dayNumber + " of 20";
 
-document.getElementById("dateText").innerText =
+document.getElementById("dateLabel").innerText =
 today.toLocaleDateString();
 
 </script>
